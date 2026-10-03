@@ -1,12 +1,13 @@
 const apiKey = "";
-const city = "Atlanta";
-const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
 
 async function getWeather() {
+    const city = document.getElementById("location").value;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+
     try{
         const response = await fetch(url);
         if (!response.ok){
-            throw new Error ("No bueno")
+            throw new Error (`City not found: "${city}" (check your spelling)`)
         }
         const data = await response.json();
         console.log(data);
@@ -16,11 +17,12 @@ async function getWeather() {
 
         document.getElementById("temperature").textContent = `${temperature}°C`;
         document.getElementById("conditions").textContent = conditions;
-        document.getElementById("location").textContent = city;
+        document.getElementById("error").textContent = "";
 
     } catch(error) {
-        console.error("No bueno")
+        console.error(error)
+        document.getElementById("error").textContent = error.message;
     }
 }
 
-getWeather();
+document.getElementById("search-button").addEventListener("click", getWeather);
