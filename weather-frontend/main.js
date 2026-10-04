@@ -1,4 +1,15 @@
-async function getWeather() {
+async function loadLocations() {
+    try {
+        const response = await fetch("http://localhost:3000/locations");
+        const cities = await response.json();
+        document.getElementById("location").innerHTML = cities.map(city => `<option value="${city}">${city}</option>`).join("");
+    } catch (error) {
+        console.error("Error loading locations:", error);
+    }
+}
+
+async function getWeather(event) {
+    event.preventDefault();
     const city = document.getElementById("location").value;
 
     try{
@@ -20,3 +31,4 @@ async function getWeather() {
 }
 
 document.getElementById("search-button").addEventListener("click", getWeather);
+document.addEventListener("DOMContentLoaded", loadLocations);

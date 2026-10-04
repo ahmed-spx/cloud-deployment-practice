@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 
-app.use((res, next) => {
+app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     next();
 });
@@ -28,7 +28,7 @@ app.get('/locations', (req, res) => {
 });
 
 app.get('/weather', (req, res) => {
-    const city = req.query.city;
+    const city = req.query.city.toLowerCase();
     const data = weatherData[city];
     
     if (data) {
