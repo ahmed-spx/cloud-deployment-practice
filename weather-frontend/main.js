@@ -31,4 +31,4 @@ async function getWeather(event) {
 }
 
 document.getElementById("search-button").addEventListener("click", getWeather);
-document.addEventListener("DOMContentLoaded", loadLocations);
+document.getElementById("load-button").addEventListener("click", loadLocations);
