@@ -2,7 +2,7 @@ async function loadLocations() {
     try {
         const response = await fetch("http://localhost:3000/locations");
         const cities = await response.json();
-        document.getElementById("location").innerHTML = cities.map(city => `<option value="${city}">${city}</option>`).join("");
+        document.getElementById("location-list").textContent = cities.join(", ");
     } catch (error) {
         console.error("Error loading locations:", error);
     }
