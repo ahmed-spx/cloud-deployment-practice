@@ -1,18 +1,37 @@
-const atlantaWeather = {
-    temperature: 25,
-    conditions: "Rainy"
-};
+const weatherData = {
+    atlanta : {
+        temperature: 70,
+        conditions: "Rainy"
+    },
 
-const gothamWeather = {
-    temperature: 20,
-    conditions: "Cloudy"
-};
+    gotham : {
+        temperature: 50,
+        conditions: "Cloudy"
+    },
 
-const metropolisWeather = {
-    temperature: 20,
-    conditions: "Sunny"
-};
+    metropolis : {
+        temperature: 80,
+        conditions: "Sunny"
+    }
+}
 
-/api/locations/atlanta
-/api/locations/gotham
-/api/locations/metropolis
+const app = express();
+app.use(express.json());
+
+app.get('/atlanta', (req, res) => {
+    res.status(200).json(weatherData.atlanta);
+});
+
+app.get('/gotham', (req, res) => {
+    res.status(200).json(weatherData.gotham);
+});
+
+app.get('/metropolis', (req, res) => {
+    res.status(200).json(weatherData.metropolis);
+});
+
+const express = require("express");
+const PORT = 3000;
+
+app.listen(
+    PORT, () => console.log(`it's alive on http://localhost:${PORT}`));
