@@ -1,3 +1,11 @@
+const express = require("express");
+const app = express();
+
+app.use((res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    next();
+});
+
 const weatherData = {
     atlanta : {
         temperature: 70,
@@ -15,23 +23,21 @@ const weatherData = {
     }
 }
 
-const app = express();
-app.use(express.json());
-
-app.get('/atlanta', (req, res) => {
-    res.status(200).json(weatherData.atlanta);
+app.get('/locations', (req, res) => {
+    res.json(Object.keys(weatherData));
 });
 
-app.get('/gotham', (req, res) => {
-    res.status(200).json(weatherData.gotham);
+app.get('/weather', (req, res) => {
+    const city = req.query.city;
+    const data = weatherData[city];
+    
+    if (data) {
+        res.status(200).json(data);
+    } else {
+        res.status(404).json({ error: "City not found" });
+    }
 });
 
-app.get('/metropolis', (req, res) => {
-    res.status(200).json(weatherData.metropolis);
-});
-
-const express = require("express");
-const PORT = 3000;
-
+const PORT = process.env.PORT || 3000;
 app.listen(
     PORT, () => console.log(`it's alive on http://localhost:${PORT}`));
