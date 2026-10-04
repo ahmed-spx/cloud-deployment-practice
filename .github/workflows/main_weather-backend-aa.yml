@@ -18,11 +18,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: backend
+        working-directory: weather-backend
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'weather-backend-aa'
-          package: backend
+          package: weather-backend
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CC1679B37E6B4297BEFED7F843CDC31A }}
