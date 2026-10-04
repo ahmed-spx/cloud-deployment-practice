@@ -1,6 +1,6 @@
 async function loadLocations() {
     try {
-        const response = await fetch("http://localhost:3000/locations");
+        const response = await fetch("https://weather-backend-aa-fjfpgmg4h6f0g4gc.westus3-01.azurewebsites.net/locations");
         const cities = await response.json();
         document.getElementById("location-list").textContent = cities.join(", ");
     } catch (error) {
@@ -13,7 +13,7 @@ async function getWeather(event) {
     const city = document.getElementById("location").value;
 
     try{
-        const response = await fetch(`http://localhost:3000/weather?city=${city}`);
+        const response = await fetch(`https://weather-backend-aa-fjfpgmg4h6f0g4gc.westus3-01.azurewebsites.net/weather?city=${city}`);
         if (!response.ok){
             throw new Error (`City not found: "${city}"`)
         }
