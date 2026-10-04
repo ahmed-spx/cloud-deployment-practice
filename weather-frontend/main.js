@@ -20,7 +20,7 @@ async function getWeather(event) {
         const data = await response.json();
         console.log(data);
 
-        document.getElementById("temperature").textContent = `${data.temperature}°F`;
+        document.getElementById("temperature").textContent = `${data.temperature} F`;
         document.getElementById("conditions").textContent = data.conditions;
         document.getElementById("error").textContent = "";
 
