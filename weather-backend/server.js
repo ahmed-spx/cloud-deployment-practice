@@ -19,35 +19,39 @@ app.use((req, res, next) => {
     next();
 });
 
-const weatherData = {
-    atlanta : {
-        temperature: 70,
-        conditions: "Rainy"
-    },
-
-    gotham : {
-        temperature: 50,
-        conditions: "Cloudy"
-    },
-
-    metropolis : {
-        temperature: 80,
-        conditions: "Sunny"
-    }
-}
-
-app.get('/locations', (req, res) => {
-    res.json(Object.keys(weatherData));
+const row = results.recordset[0];
+    res.json({
+        conditions: row.conditions,
+        temperature: {
+            current: row.current_temp,
+            q1: row.q1_temp,
+            q2: row.q2_temp,
+            q3: row.q3_temp,
+            q4: row.q4_temp
+        }
 });
 
-app.get('/weather', (req, res) => {
-    const city = (req.query.city || "").toLowerCase();
-    const data = weatherData[city];
-    
-    if (data) {
-        res.status(200).json(data);
-    } else {
-        res.status(404).json({ error: "City not found" });
+sql.connect(dbConfig)
+
+app.get('/locations', async (req, res) => {
+    try {
+        const result = await sql.query`SELECT city FROM weather_table`;
+        const cities = result.recordset.map(row => row.city);
+        res.json(cities);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error fetching locations from database" });
+    }
+});
+
+app.get('/conditions', async (req, res) => {
+    try {
+        const result = await sql.query`SELECT conditions FROM weather_table`;
+        const conditions = result.recordset.map(row => row.conditions);
+        res.json(conditions);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error fetching weather data from database" });
     }
 });
 
