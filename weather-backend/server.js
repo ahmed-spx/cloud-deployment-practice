@@ -19,19 +19,7 @@ app.use((req, res, next) => {
     next();
 });
 
-const row = results.recordset[0];
-    res.json({
-        conditions: row.conditions,
-        temperature: {
-            current: row.current_temp,
-            q1: row.q1_temp,
-            q2: row.q2_temp,
-            q3: row.q3_temp,
-            q4: row.q4_temp
-        }
-});
-
-sql.connect(dbConfig)
+sql.connect(dbConfig);
 
 app.get('/locations', async (req, res) => {
     try {
@@ -44,11 +32,31 @@ app.get('/locations', async (req, res) => {
     }
 });
 
-app.get('/conditions', async (req, res) => {
+app.get('/weather', async (req, res) => {
     try {
-        const result = await sql.query`SELECT conditions FROM weather_table`;
-        const conditions = result.recordset.map(row => row.conditions);
-        res.json(conditions);
+        const city = req.query.city;
+
+        const request = new sql.Request();
+        request.input('city', sql.NVarChar, city);
+        const result = await request.query(
+            'SELECT current_temp, conditions, q1_temp, q2_temp, q3_temp, q4_temp FROM weather_table WHERE city = @city'
+        );
+
+        if (result.recordset.length === 0) {
+            return res.status(404).json({ error: "City not found" });
+        }
+
+        const row = result.recordset[0];
+        res.json({
+            conditions: row.conditions,
+            temperature: {
+                current: row.current_temp,
+                q1: row.q1_temp,
+                q2: row.q2_temp,
+                q3: row.q3_temp,
+                q4: row.q4_temp
+            }
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Error fetching weather data from database" });
