@@ -10,8 +10,14 @@ async function loadLocations() {
 
 async function getWeather(event) {
     event.preventDefault();
-    const city = document.getElementById("location").value;
+    const city = document.getElementById("location").value.trim();
 
+    const validCity = /^[a-zA-Z\s]+$/;
+    if (city === "" || !validCity.test(city)) {
+        document.getElementById("error").textContent = "Please enter a valid city name.";
+        return;
+    }
+    
     try{
         const response = await fetch(`https://weather-backend-aa-fjfpgmg4h6f0g4gc.westus3-01.azurewebsites.net/weather?city=${city}`);
         if (!response.ok){
