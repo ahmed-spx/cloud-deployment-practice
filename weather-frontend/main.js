@@ -63,6 +63,7 @@ async function updateUI() {
 
     document.getElementById("login-button").style.display = isAuthenticated ? "none" : "inline-block";
     document.getElementById("logout-button").style.display = isAuthenticated ? "inline-block" : "none";
+    document.getElementById("app-content").style.display = isAuthenticated ? "block" : "none";
 
     if (isAuthenticated) {
         const user = await auth0Client.getUser();

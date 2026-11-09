@@ -10,23 +10,24 @@
             <button id="login-button">Log In</button>
             <button id="logout-button">Log Out</button>
         </nav>
-        
-        <h1>Assignment 2</h1>
-        <div class="weather-box">
-            <h2>Available Cities</h2>
-            <button id="load-button" type="button">Load</button>
-            <p>Cities: <span id="location-list">Loading...</span></p>
+        <div id="app-content">
+            <h1>Assignment 2</h1>
+            <div class="weather-box">
+                <h2>Available Cities</h2>
+                <button id="load-button" type="button">Load</button>
+                <p>Cities: <span id="location-list">Loading...</span></p>
+            </div>
+
+            <form class="weather-box">
+                <h2>Weather for <input type="text" id="location" placeholder="Enter a city"/></h2>
+                <button id="search-button">Get Weather</button>
+                <p>Temperature: <span id="temperature">Loading...</span></p>
+                <p>Conditions: <span id="conditions">Loading...</span></p>
+            </form>
+
+            <p id="error"></p>
+            <script src="https://cdn.auth0.com/js/auth0-spa-js/2.1/auth0-spa-js.production.js"></script>
+            <script src="main.js"></script>
         </div>
-
-        <form class="weather-box">
-            <h2>Weather for <input type="text" id="location" placeholder="Enter a city"/></h2>
-            <button id="search-button">Get Weather</button>
-            <p>Temperature: <span id="temperature">Loading...</span></p>
-            <p>Conditions: <span id="conditions">Loading...</span></p>
-        </form>
-
-        <p id="error"></p>
-        <script src="https://cdn.auth0.com/js/auth0-spa-js/2.1/auth0-spa-js.production.js"></script>
-        <script src="main.js"></script>
     </body>
 </html>
