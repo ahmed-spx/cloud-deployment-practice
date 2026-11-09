@@ -8,7 +8,8 @@ const dbConfig = {
     password: process.env.DB_PASSWORD,
     options: {
         encrypt: true,
-    }
+    },
+    connectionTimeout: 60000,
 };
 
 const express = require("express");
